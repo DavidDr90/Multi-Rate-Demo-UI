@@ -208,6 +208,7 @@ namespace App
 
             // start cellular Iper
             startCellularIperf();
+            Thread.Sleep(TimeSpan.FromSeconds(3));
 
             //SW RF Kill - On            
             SetPhyRadioState(Wlan.Dot11RadioState.On);
@@ -243,11 +244,18 @@ namespace App
                 // set the wanted state based on perviuse state
                 softwareRadioState = (connectFlag) ? Wlan.Dot11RadioState.On : Wlan.Dot11RadioState.Off;
                 buttonLabal = (connectFlag) ? "Disconnect WiFi" : "Connect WiFi";
-                connectFlag = !connectFlag; // change the state for next click
                 wifiButtom.Text = buttonLabal;
-               
+                 
                 SetPhyRadioState(softwareRadioState);
                 Console.WriteLine($"Successfully set The SW RF state to {softwareRadioState}");
+
+                if (connectFlag)
+                {
+                    startWiFi1Iperf();
+                    startWiFi2Iperf();
+                }
+                connectFlag = !connectFlag; // change the state for next click
+
             }
             catch (Win32Exception ex)
             {
@@ -455,17 +463,26 @@ namespace App
 
 
         #region IPerf Running
-    
+
+        int sevenBase = 7000;
+        int eightBase = 8000;
+
         private void startWiFi1Iperf()
         {
             if (!string.IsNullOrEmpty(iperfCmdWiFi1.Text))
-                startIPerfProcess(iperfCmdWiFi1.Text);
+            {
+                sevenBase++;
+                startIPerfProcess(replacePortNumber(iperfCmdWiFi1.Text, sevenBase));
+            }
         }
-
+        
         private void startWiFi2Iperf()
         {
             if (!string.IsNullOrEmpty(iperfCmdWiFi2.Text))
-                startIPerfProcess(iperfCmdWiFi2.Text);
+            {
+                eightBase++;
+                startIPerfProcess(replacePortNumber(iperfCmdWiFi2.Text, eightBase));
+            }
         }
 
         private void startCellularIperf()
@@ -512,21 +529,28 @@ namespace App
                 SetWindowText(handle, $"{pathToExe}: {arguments}");
             }
         }
-       
+
         #endregion
 
 
         #region set SW RF Kill Fucntions       
-       
+
         public static void SetPhyRadioState(Wlan.Dot11RadioState softwareRadioState)
         {
-            var phyRadioState = new Wlan.WlanPhyRadioState
+            try {
+                var phyRadioState = new Wlan.WlanPhyRadioState
+                {
+                    dwPhyIndex = 0,
+                    dot11SoftwareRadioState = softwareRadioState
+                };
+                SetInterface(Wlan.WlanIntfOpcode.RadioState, phyRadioState);
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            }
+            catch (Exception e)
             {
-                dwPhyIndex = 0,
-                dot11SoftwareRadioState = softwareRadioState
-            };
-            SetInterface(Wlan.WlanIntfOpcode.RadioState, phyRadioState);
-            Thread.Sleep(TimeSpan.FromSeconds(5));
+                Console.WriteLine($"Error while trying to change SW RF state!\nMessage: [{e.Message}]");
+            }
         }
 
         private static void SetInterface<T>(Wlan.WlanIntfOpcode opCode, T value) where T : struct
@@ -577,6 +601,8 @@ namespace App
         #endregion
 
 
+        #region General Functions
+
         private void PrintProcessInfo(Process process)
         {
             if (!process.HasExited)
@@ -584,6 +610,59 @@ namespace App
                                 process.ProcessName, process.Id, process.Responding, process.PrivateMemorySize64);
         }
 
+
+        /// <summary>
+        /// return the index of the input char in a given string
+        /// </summary>
+        /// <param name="s">original string</param>
+        /// <param name="t">char to look for</param>
+        /// <param name="n">place number</param>
+        /// <returns></returns>
+        public int GetNthIndex(string s, char t, int n)
+        {
+            int count = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == t)
+                {
+                    count++;
+                    if (count == n)
+                    {
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// change the port number in the cmd string
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="portNumber"></param>
+        /// <returns></returns>
+        private string replacePortNumber(string text, int portNumber)
+        {
+            string start = string.Empty;
+            string end = string.Empty;
+            string cmdWithNewPort = string.Empty;
+
+            int spaceIndex = 0;
+            int portIndex = text.IndexOf("-p");
+            if (portIndex >= 0)
+            {
+                portIndex += 2;
+                start = text.Substring(0, portIndex);
+                end = text.Substring(portIndex);
+                spaceIndex = GetNthIndex(end, ' ', 2) + 1;
+                end = end.Substring(spaceIndex);
+
+                cmdWithNewPort = $"{start} {portNumber.ToString()} {end}";
+            }
+            return cmdWithNewPort;
+        }
+
+        #endregion
     }
 }
 

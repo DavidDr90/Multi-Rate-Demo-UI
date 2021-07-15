@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.PnlNav = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -223,9 +223,9 @@
             this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
             this.label9.Location = new System.Drawing.Point(17, 274);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(170, 24);
+            this.label9.Size = new System.Drawing.Size(168, 24);
             this.label9.TabIndex = 31;
-            this.label9.Text = "WiFi 1 Command";
+            this.label9.Text = "WiFi 1 Cmd 7000";
             // 
             // label10
             // 
@@ -234,9 +234,9 @@
             this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
             this.label10.Location = new System.Drawing.Point(17, 310);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(170, 24);
+            this.label10.Size = new System.Drawing.Size(168, 24);
             this.label10.TabIndex = 31;
-            this.label10.Text = "WiFi 2 Command";
+            this.label10.Text = "WiFi 2 Cmd 8000";
             // 
             // label11
             // 
@@ -266,6 +266,8 @@
             this.iperfCmdWiFi1.Name = "iperfCmdWiFi1";
             this.iperfCmdWiFi1.Size = new System.Drawing.Size(612, 20);
             this.iperfCmdWiFi1.TabIndex = 35;
+            this.iperfCmdWiFi1.Text = "C:\\Users\\itl\\Desktop\\iperf-3.1.3-win64\\iperf3-download.exe -c 192.168.239.37 -t 9" +
+    "999 -p 7000 -i1 -B 192.168.239.49";
             // 
             // iperfCmdWiFi2
             // 
@@ -273,6 +275,8 @@
             this.iperfCmdWiFi2.Name = "iperfCmdWiFi2";
             this.iperfCmdWiFi2.Size = new System.Drawing.Size(612, 20);
             this.iperfCmdWiFi2.TabIndex = 35;
+            this.iperfCmdWiFi2.Text = "C:\\Users\\itl\\Desktop\\iperf-3.1.3-win64\\iperf3-download.exe -c 192.168.239.37 -t 9" +
+    "999 -p 8000 -i1 -B 192.168.239.47";
             // 
             // iperfCmdCellular
             // 
@@ -280,6 +284,8 @@
             this.iperfCmdCellular.Name = "iperfCmdCellular";
             this.iperfCmdCellular.Size = new System.Drawing.Size(612, 20);
             this.iperfCmdCellular.TabIndex = 35;
+            this.iperfCmdCellular.Text = "C:\\Users\\itl\\Desktop\\iperf-3.1.3-win64\\iperf3-download.exe -c 172.28.106.166 -b 1" +
+    "000m -t 9999 -i 1 -B 10.155.118.159 ";
             // 
             // label12
             // 
@@ -501,46 +507,46 @@
             // 
             // mainChart
             // 
-            chartArea2.AxisX.Title = "Time (s)";
-            chartArea2.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea2.AxisY.Title = "Traffic (MB)";
-            chartArea2.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea2.Name = "ChartArea1";
-            this.mainChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.mainChart.Legends.Add(legend2);
+            chartArea3.AxisX.Title = "Time (s)";
+            chartArea3.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea3.AxisY.Title = "Traffic (MB)";
+            chartArea3.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea3.Name = "ChartArea1";
+            this.mainChart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.mainChart.Legends.Add(legend3);
             this.mainChart.Location = new System.Drawing.Point(45, 41);
             this.mainChart.Name = "mainChart";
-            series5.BackImageWrapMode = System.Windows.Forms.DataVisualization.Charting.ChartImageWrapMode.TileFlipX;
-            series5.BorderColor = System.Drawing.Color.White;
-            series5.BorderWidth = 3;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Color = System.Drawing.Color.Blue;
-            series5.Legend = "Legend1";
-            series5.Name = "HighBand";
-            series6.BorderWidth = 3;
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            series6.Legend = "Legend1";
-            series6.Name = "LowBand";
-            series7.BorderWidth = 3;
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series7.Color = System.Drawing.Color.Red;
-            series7.Legend = "Legend1";
-            series7.Name = "Cellular";
-            series8.BorderWidth = 3;
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series8.Color = System.Drawing.Color.Black;
-            series8.Legend = "Legend1";
-            series8.Name = "Sum";
-            this.mainChart.Series.Add(series5);
-            this.mainChart.Series.Add(series6);
-            this.mainChart.Series.Add(series7);
-            this.mainChart.Series.Add(series8);
+            series9.BackImageWrapMode = System.Windows.Forms.DataVisualization.Charting.ChartImageWrapMode.TileFlipX;
+            series9.BorderColor = System.Drawing.Color.White;
+            series9.BorderWidth = 3;
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series9.Color = System.Drawing.Color.Blue;
+            series9.Legend = "Legend1";
+            series9.Name = "HighBand";
+            series10.BorderWidth = 3;
+            series10.ChartArea = "ChartArea1";
+            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series10.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            series10.Legend = "Legend1";
+            series10.Name = "LowBand";
+            series11.BorderWidth = 3;
+            series11.ChartArea = "ChartArea1";
+            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series11.Color = System.Drawing.Color.Red;
+            series11.Legend = "Legend1";
+            series11.Name = "Cellular";
+            series12.BorderWidth = 3;
+            series12.ChartArea = "ChartArea1";
+            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series12.Color = System.Drawing.Color.Black;
+            series12.Legend = "Legend1";
+            series12.Name = "Sum";
+            this.mainChart.Series.Add(series9);
+            this.mainChart.Series.Add(series10);
+            this.mainChart.Series.Add(series11);
+            this.mainChart.Series.Add(series12);
             this.mainChart.Size = new System.Drawing.Size(774, 336);
             this.mainChart.TabIndex = 18;
             this.mainChart.Text = "chart1";
