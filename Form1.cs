@@ -158,6 +158,7 @@ namespace App
 
         #endregion
 
+
         #region View buttons     
 
         private void BtnView1_Click(object sender, EventArgs e)
@@ -224,7 +225,7 @@ namespace App
             SetPhyRadioState(Wlan.Dot11RadioState.Off);            
             // start cellular Iper
             startCellularIperf();
-            Thread.Sleep(TimeSpan.FromSeconds(3));
+            //Thread.Sleep(TimeSpan.FromSeconds(2));
 
             //SW RF Kill - On            
             SetPhyRadioState(Wlan.Dot11RadioState.On);
@@ -232,20 +233,12 @@ namespace App
             // Connect to entered SSID profile
             connectToProfile();
             //Ira added more delay
-            Thread.Sleep(TimeSpan.FromSeconds(10));
+            Thread.Sleep(TimeSpan.FromSeconds(4));
 
             startAllWifiIperf();
-                  
-            // make sure we only have one thread running
-            if (networkChartThread != null && networkChartThread.IsAlive)
-            {
-                networkChartThread.Abort();
-            }
-            networkChartThread = new Thread(new ThreadStart(this.getNetworkPerformanceCountersGraph));
-            networkChartThread.IsBackground = true;
-            networkChartThread.Start();
 
-            ShowFileTransferDialogBox();
+            StartMonitoringTraffic();
+           
         }       
 
         /// <summary>
@@ -268,11 +261,13 @@ namespace App
                 wifiButtom.Text = buttonLabal;
                  
                 SetPhyRadioState(softwareRadioState);
-                Console.WriteLine($"Successfully set The SW RF state to {softwareRadioState}");
+                //Console.WriteLine($"Successfully set The SW RF state to {softwareRadioState}");
 
                 if (connectFlag)
                 {
-                    Thread.Sleep(TimeSpan.FromSeconds(5)); // delay to let the connection process finish
+                   
+                    // David - cannot reduce this value!!!
+                    Thread.Sleep(TimeSpan.FromSeconds(4)); // delay to let the connection process finish
                     startAllWifiIperf();
                 }
                 connectFlag = !connectFlag; // change the state for next click
@@ -285,9 +280,14 @@ namespace App
         }
 
         private void runIperButton_Click(object sender, EventArgs e)
-        {
-            startAllWifiIperf();        
+        {       
             startCellularIperf();
+            startAllWifiIperf();
+        }
+
+        private void startMonitorButton_Click(object sender, EventArgs e)
+        {
+            StartMonitoringTraffic();
         }
 
         #endregion
@@ -340,6 +340,24 @@ namespace App
 
 
         #region Graph Update
+
+        /// <summary>
+        /// Start a new thread to monitor traffic statistics every 1 sec
+        /// show file transfer window
+        /// </summary>
+        private void StartMonitoringTraffic()
+        {
+            // make sure we only have one thread running
+            if (networkChartThread != null && networkChartThread.IsAlive)
+            {
+                networkChartThread.Abort();
+            }
+            networkChartThread = new Thread(new ThreadStart(this.getNetworkPerformanceCountersGraph));
+            networkChartThread.IsBackground = true;
+            networkChartThread.Start();
+
+            ShowFileTransferDialogBox();
+        }
 
         private void UpdateNetworkChart()
         {
@@ -430,7 +448,7 @@ namespace App
                     //......
                 }
 
-                Thread.Sleep(1000);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
         }
 
@@ -513,9 +531,9 @@ namespace App
         /// </summary>
         private void startAllWifiIperf()
         {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            //Thread.Sleep(TimeSpan.FromMilliseconds(500));
             startWiFi1Iperf();
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            //Thread.Sleep(TimeSpan.FromMilliseconds(500));
             startWiFi2Iperf();
         }
 
@@ -566,9 +584,10 @@ namespace App
                     generalProcessList.Add(process);
                 else
                     wifiIperfProcessList.Add(process);  // add the process for future use
-
+                
+                // David - remove this sleep time
                 // change the window name only for active process
-                Thread.Sleep(100);
+                //Thread.Sleep(TimeSpan.FromMilliseconds(10));
                 if (!process.HasExited)
                 {
                     IntPtr handle = process.MainWindowHandle;
@@ -598,7 +617,8 @@ namespace App
                     dot11SoftwareRadioState = softwareRadioState
                 };
                 SetInterface(Wlan.WlanIntfOpcode.RadioState, phyRadioState);
-                Thread.Sleep(TimeSpan.FromSeconds(2));
+                // David - try to improve connect/disconnect time
+                //Thread.Sleep(TimeSpan.FromSeconds(2));
 
             }
             catch (Exception e)
@@ -751,20 +771,20 @@ namespace App
 
             string cmd = string.Empty;
             // if we want to run release/renew flow
-            if (releaseCheckBox.Checked)
-            {
-                profileButton.Text = $"{((profileConnectionFlag) ? "Release" : "Renew")}";
+            //if (releaseCheckBox.Checked)
+            //{
+                //profileButton.Text = $"{((profileConnectionFlag) ? "Release" : "Renew")}";
                 //Ira for release renew
-                cmd = $"ipconfig /{((profileConnectionFlag) ? @"renew ""Wi-Fi"" & ipconfig /renew ""Wi-Fi 2""" : $"release *Fi*")}";
-            }
-            else//for connect disconnect flow
-            {
+                //cmd = $"ipconfig /{((profileConnectionFlag) ? @"renew ""Wi-Fi"" & ipconfig /renew ""Wi-Fi 2""" : $"release *Fi*")}";
+            //}
+            //else//for connect disconnect flow
+            //{
                 profileButton.Text = $"{((profileConnectionFlag) ? "Disconnect" : "Connect")} Profile";
                 //Ira - You were right David, the command I sent is incorrect, sorry )))
                 cmd = $"netsh wlan {((profileConnectionFlag) ? $"connect name ={profileName.Text} ssid={profileName.Text}" : "disconnect")}";
-            }                                     
+            //}                                     
 
-            CreateAndRunProcess("cmd.exe", $"/k {cmd}");
+            CreateAndRunProcess("cmd.exe", $"/c {cmd}");
 
             //Ira - Need to start Ipef Again, but the command below doesn't help            
             if (profileConnectionFlag)
@@ -796,8 +816,9 @@ namespace App
             process.Start();
             generalProcessList.Add(process);  // add the process for future use
 
+            // David - remove this sleep time
             // change the window name only for active process
-            Thread.Sleep(TimeSpan.FromMilliseconds(10));
+            //Thread.Sleep(TimeSpan.FromMilliseconds(10));
             if (!process.HasExited)
             {
                 IntPtr handle = process.MainWindowHandle;
@@ -872,13 +893,15 @@ namespace App
             {
                 SafelyKillProcess(process);
                 // wait for stabiliszation
-                Thread.Sleep(TimeSpan.FromSeconds(0.5));
+                
             }
-           
+            //David -move outside the loop to improve time
+            Thread.Sleep(TimeSpan.FromMilliseconds(100));
         }
+
         #endregion
 
-
+        
     }
 }
 

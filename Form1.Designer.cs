@@ -64,7 +64,10 @@
             this.profileButton = new System.Windows.Forms.Button();
             this.wifiButtom = new System.Windows.Forms.Button();
             this.btnStartDemo = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.aggregateLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.cellularLabel = new System.Windows.Forms.Label();
@@ -79,21 +82,19 @@
             this.BtnSettings = new System.Windows.Forms.Button();
             this.BtnView2 = new System.Windows.Forms.Button();
             this.BtnView1 = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.aggregateLabel = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            this.startMonitorButton = new System.Windows.Forms.Button();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileTransferPicture)).BeginInit();
             this.settingsPanel.SuspendLayout();
             this.numbersPanel.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.graphPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).BeginInit();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // PnlNav
@@ -324,6 +325,7 @@
             // settingsPanel
             // 
             this.settingsPanel.Controls.Add(this.releaseCheckBox);
+            this.settingsPanel.Controls.Add(this.startMonitorButton);
             this.settingsPanel.Controls.Add(this.button1);
             this.settingsPanel.Controls.Add(this.fileTransferPicture);
             this.settingsPanel.Controls.Add(this.label12);
@@ -354,7 +356,7 @@
             this.releaseCheckBox.AutoSize = true;
             this.releaseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.releaseCheckBox.ForeColor = System.Drawing.Color.White;
-            this.releaseCheckBox.Location = new System.Drawing.Point(187, 432);
+            this.releaseCheckBox.Location = new System.Drawing.Point(33, 426);
             this.releaseCheckBox.Name = "releaseCheckBox";
             this.releaseCheckBox.Size = new System.Drawing.Size(252, 37);
             this.releaseCheckBox.TabIndex = 38;
@@ -381,7 +383,7 @@
             // 
             this.profileName.Location = new System.Drawing.Point(187, 391);
             this.profileName.Name = "profileName";
-            this.profileName.Size = new System.Drawing.Size(204, 20);
+            this.profileName.Size = new System.Drawing.Size(107, 20);
             this.profileName.TabIndex = 35;
             this.profileName.Text = "DEMO_MRAT";
             // 
@@ -461,6 +463,17 @@
             this.btnStartDemo.UseVisualStyleBackColor = false;
             this.btnStartDemo.Click += new System.EventHandler(this.btnStartDemo_Click);
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.White;
+            this.label15.Location = new System.Drawing.Point(390, 270);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(107, 24);
+            this.label15.TabIndex = 14;
+            this.label15.Text = "Aggregate";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -471,6 +484,27 @@
             this.label4.Size = new System.Drawing.Size(186, 24);
             this.label4.TabIndex = 14;
             this.label4.Text = "WWAN Cellular 5G";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
+            this.panel2.Controls.Add(this.aggregateLabel);
+            this.panel2.Location = new System.Drawing.Point(313, 297);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(258, 130);
+            this.panel2.TabIndex = 15;
+            // 
+            // aggregateLabel
+            // 
+            this.aggregateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.aggregateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aggregateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(146)))), ((int)(((byte)(249)))));
+            this.aggregateLabel.Location = new System.Drawing.Point(0, 0);
+            this.aggregateLabel.Name = "aggregateLabel";
+            this.aggregateLabel.Size = new System.Drawing.Size(258, 130);
+            this.aggregateLabel.TabIndex = 0;
+            this.aggregateLabel.Text = "---";
+            this.aggregateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label3
             // 
@@ -673,37 +707,20 @@
             this.BtnView1.Click += new System.EventHandler(this.BtnView1_Click);
             this.BtnView1.Leave += new System.EventHandler(this.BtnView1_Leave);
             // 
-            // panel2
+            // startMonitorButton
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
-            this.panel2.Controls.Add(this.aggregateLabel);
-            this.panel2.Location = new System.Drawing.Point(313, 297);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(258, 130);
-            this.panel2.TabIndex = 15;
-            // 
-            // aggregateLabel
-            // 
-            this.aggregateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.aggregateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aggregateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(146)))), ((int)(((byte)(249)))));
-            this.aggregateLabel.Location = new System.Drawing.Point(0, 0);
-            this.aggregateLabel.Name = "aggregateLabel";
-            this.aggregateLabel.Size = new System.Drawing.Size(258, 130);
-            this.aggregateLabel.TabIndex = 0;
-            this.aggregateLabel.Text = "---";
-            this.aggregateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(390, 270);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(107, 24);
-            this.label15.TabIndex = 14;
-            this.label15.Text = "Aggregate";
+            this.startMonitorButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(50)))));
+            this.startMonitorButton.FlatAppearance.BorderSize = 0;
+            this.startMonitorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.startMonitorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startMonitorButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.startMonitorButton.Location = new System.Drawing.Point(373, 401);
+            this.startMonitorButton.Name = "startMonitorButton";
+            this.startMonitorButton.Size = new System.Drawing.Size(186, 45);
+            this.startMonitorButton.TabIndex = 37;
+            this.startMonitorButton.Text = "Start Monitoring";
+            this.startMonitorButton.UseVisualStyleBackColor = false;
+            this.startMonitorButton.Click += new System.EventHandler(this.startMonitorButton_Click);
             // 
             // Form1
             // 
@@ -731,13 +748,13 @@
             this.settingsPanel.PerformLayout();
             this.numbersPanel.ResumeLayout(false);
             this.numbersPanel.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.graphPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
             this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -791,6 +808,7 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label aggregateLabel;
+        private System.Windows.Forms.Button startMonitorButton;
     }
 }
 
