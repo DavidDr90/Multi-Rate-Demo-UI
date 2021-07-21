@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.PnlNav = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -56,8 +56,12 @@
             this.label12 = new System.Windows.Forms.Label();
             this.runIperButton = new System.Windows.Forms.Button();
             this.settingsPanel = new System.Windows.Forms.Panel();
+            this.releaseCheckBox = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.profileName = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.numbersPanel = new System.Windows.Forms.Panel();
+            this.profileButton = new System.Windows.Forms.Button();
             this.wifiButtom = new System.Windows.Forms.Button();
             this.btnStartDemo = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -75,6 +79,9 @@
             this.BtnSettings = new System.Windows.Forms.Button();
             this.BtnView2 = new System.Windows.Forms.Button();
             this.BtnView1 = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.aggregateLabel = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileTransferPicture)).BeginInit();
@@ -86,6 +93,7 @@
             this.graphPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).BeginInit();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // PnlNav
@@ -160,7 +168,7 @@
             // 
             this.highBandDrop.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.highBandDrop.FormattingEnabled = true;
-            this.highBandDrop.Location = new System.Drawing.Point(312, 96);
+            this.highBandDrop.Location = new System.Drawing.Point(312, 69);
             this.highBandDrop.Name = "highBandDrop";
             this.highBandDrop.Size = new System.Drawing.Size(381, 21);
             this.highBandDrop.TabIndex = 30;
@@ -170,7 +178,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.label5.Location = new System.Drawing.Point(120, 93);
+            this.label5.Location = new System.Drawing.Point(120, 66);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(108, 24);
             this.label5.TabIndex = 33;
@@ -180,7 +188,7 @@
             // 
             this.lowBandDrop.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.lowBandDrop.FormattingEnabled = true;
-            this.lowBandDrop.Location = new System.Drawing.Point(312, 139);
+            this.lowBandDrop.Location = new System.Drawing.Point(312, 109);
             this.lowBandDrop.Name = "lowBandDrop";
             this.lowBandDrop.Size = new System.Drawing.Size(381, 21);
             this.lowBandDrop.TabIndex = 29;
@@ -190,7 +198,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.label6.Location = new System.Drawing.Point(120, 136);
+            this.label6.Location = new System.Drawing.Point(120, 106);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(102, 24);
             this.label6.TabIndex = 32;
@@ -200,7 +208,7 @@
             // 
             this.cellularDrop.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cellularDrop.FormattingEnabled = true;
-            this.cellularDrop.Location = new System.Drawing.Point(312, 182);
+            this.cellularDrop.Location = new System.Drawing.Point(312, 148);
             this.cellularDrop.Name = "cellularDrop";
             this.cellularDrop.Size = new System.Drawing.Size(381, 21);
             this.cellularDrop.TabIndex = 28;
@@ -210,7 +218,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.label7.Location = new System.Drawing.Point(120, 179);
+            this.label7.Location = new System.Drawing.Point(120, 145);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(81, 24);
             this.label7.TabIndex = 31;
@@ -221,7 +229,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.label9.Location = new System.Drawing.Point(17, 274);
+            this.label9.Location = new System.Drawing.Point(17, 248);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(168, 24);
             this.label9.TabIndex = 31;
@@ -232,7 +240,7 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.label10.Location = new System.Drawing.Point(17, 310);
+            this.label10.Location = new System.Drawing.Point(17, 284);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(168, 24);
             this.label10.TabIndex = 31;
@@ -243,7 +251,7 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.label11.Location = new System.Drawing.Point(17, 347);
+            this.label11.Location = new System.Drawing.Point(17, 321);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(130, 24);
             this.label11.TabIndex = 31;
@@ -254,7 +262,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.label8.Location = new System.Drawing.Point(242, 35);
+            this.label8.Location = new System.Drawing.Point(242, 18);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(224, 29);
             this.label8.TabIndex = 34;
@@ -262,7 +270,7 @@
             // 
             // iperfCmdWiFi1
             // 
-            this.iperfCmdWiFi1.Location = new System.Drawing.Point(187, 279);
+            this.iperfCmdWiFi1.Location = new System.Drawing.Point(187, 253);
             this.iperfCmdWiFi1.Name = "iperfCmdWiFi1";
             this.iperfCmdWiFi1.Size = new System.Drawing.Size(612, 20);
             this.iperfCmdWiFi1.TabIndex = 35;
@@ -271,7 +279,7 @@
             // 
             // iperfCmdWiFi2
             // 
-            this.iperfCmdWiFi2.Location = new System.Drawing.Point(187, 315);
+            this.iperfCmdWiFi2.Location = new System.Drawing.Point(187, 289);
             this.iperfCmdWiFi2.Name = "iperfCmdWiFi2";
             this.iperfCmdWiFi2.Size = new System.Drawing.Size(612, 20);
             this.iperfCmdWiFi2.TabIndex = 35;
@@ -280,7 +288,7 @@
             // 
             // iperfCmdCellular
             // 
-            this.iperfCmdCellular.Location = new System.Drawing.Point(187, 352);
+            this.iperfCmdCellular.Location = new System.Drawing.Point(187, 326);
             this.iperfCmdCellular.Name = "iperfCmdCellular";
             this.iperfCmdCellular.Size = new System.Drawing.Size(612, 20);
             this.iperfCmdCellular.TabIndex = 35;
@@ -292,7 +300,7 @@
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.label12.Location = new System.Drawing.Point(242, 228);
+            this.label12.Location = new System.Drawing.Point(242, 202);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(206, 29);
             this.label12.TabIndex = 36;
@@ -315,13 +323,16 @@
             // 
             // settingsPanel
             // 
+            this.settingsPanel.Controls.Add(this.releaseCheckBox);
             this.settingsPanel.Controls.Add(this.button1);
             this.settingsPanel.Controls.Add(this.fileTransferPicture);
             this.settingsPanel.Controls.Add(this.label12);
+            this.settingsPanel.Controls.Add(this.profileName);
             this.settingsPanel.Controls.Add(this.iperfCmdCellular);
             this.settingsPanel.Controls.Add(this.iperfCmdWiFi2);
             this.settingsPanel.Controls.Add(this.iperfCmdWiFi1);
             this.settingsPanel.Controls.Add(this.label8);
+            this.settingsPanel.Controls.Add(this.label13);
             this.settingsPanel.Controls.Add(this.label11);
             this.settingsPanel.Controls.Add(this.label10);
             this.settingsPanel.Controls.Add(this.label9);
@@ -338,6 +349,19 @@
             this.settingsPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.settingsPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             // 
+            // releaseCheckBox
+            // 
+            this.releaseCheckBox.AutoSize = true;
+            this.releaseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.releaseCheckBox.ForeColor = System.Drawing.Color.White;
+            this.releaseCheckBox.Location = new System.Drawing.Point(187, 432);
+            this.releaseCheckBox.Name = "releaseCheckBox";
+            this.releaseCheckBox.Size = new System.Drawing.Size(252, 37);
+            this.releaseCheckBox.TabIndex = 38;
+            this.releaseCheckBox.Text = "Release/Renew";
+            this.releaseCheckBox.UseVisualStyleBackColor = true;
+            this.releaseCheckBox.CheckedChanged += new System.EventHandler(this.releaseCheckBox_CheckedChanged);
+            // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(50)))));
@@ -353,11 +377,33 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.runIperButton_Click);
             // 
+            // profileName
+            // 
+            this.profileName.Location = new System.Drawing.Point(187, 391);
+            this.profileName.Name = "profileName";
+            this.profileName.Size = new System.Drawing.Size(204, 20);
+            this.profileName.TabIndex = 35;
+            this.profileName.Text = "DEMO_MRAT";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.label13.Location = new System.Drawing.Point(19, 391);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(130, 24);
+            this.label13.TabIndex = 31;
+            this.label13.Text = "Profile Name";
+            // 
             // numbersPanel
             // 
+            this.numbersPanel.Controls.Add(this.profileButton);
             this.numbersPanel.Controls.Add(this.wifiButtom);
             this.numbersPanel.Controls.Add(this.btnStartDemo);
+            this.numbersPanel.Controls.Add(this.label15);
             this.numbersPanel.Controls.Add(this.label4);
+            this.numbersPanel.Controls.Add(this.panel2);
             this.numbersPanel.Controls.Add(this.label3);
             this.numbersPanel.Controls.Add(this.panel5);
             this.numbersPanel.Controls.Add(this.label2);
@@ -365,10 +411,25 @@
             this.numbersPanel.Controls.Add(this.panel3);
             this.numbersPanel.Location = new System.Drawing.Point(87, 150);
             this.numbersPanel.Name = "numbersPanel";
-            this.numbersPanel.Size = new System.Drawing.Size(859, 527);
+            this.numbersPanel.Size = new System.Drawing.Size(889, 527);
             this.numbersPanel.TabIndex = 19;
             this.numbersPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.numbersPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
+            // 
+            // profileButton
+            // 
+            this.profileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(50)))));
+            this.profileButton.FlatAppearance.BorderSize = 0;
+            this.profileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.profileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profileButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.profileButton.Location = new System.Drawing.Point(626, 392);
+            this.profileButton.Name = "profileButton";
+            this.profileButton.Size = new System.Drawing.Size(196, 45);
+            this.profileButton.TabIndex = 16;
+            this.profileButton.Text = "Disconnect Profile";
+            this.profileButton.UseVisualStyleBackColor = false;
+            this.profileButton.Click += new System.EventHandler(this.profileButton_Click);
             // 
             // wifiButtom
             // 
@@ -377,9 +438,9 @@
             this.wifiButtom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.wifiButtom.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.wifiButtom.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.wifiButtom.Location = new System.Drawing.Point(636, 463);
+            this.wifiButtom.Location = new System.Drawing.Point(626, 463);
             this.wifiButtom.Name = "wifiButtom";
-            this.wifiButtom.Size = new System.Drawing.Size(186, 45);
+            this.wifiButtom.Size = new System.Drawing.Size(196, 45);
             this.wifiButtom.TabIndex = 16;
             this.wifiButtom.Text = "Disconnect WiFi";
             this.wifiButtom.UseVisualStyleBackColor = false;
@@ -405,28 +466,28 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(324, 271);
+            this.label4.Location = new System.Drawing.Point(345, 53);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(200, 24);
+            this.label4.Size = new System.Drawing.Size(186, 24);
             this.label4.TabIndex = 14;
-            this.label4.Text = "WWAN Cellular (5G)";
+            this.label4.Text = "WWAN Cellular 5G";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(495, 53);
+            this.label3.Location = new System.Drawing.Point(610, 53);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(238, 24);
+            this.label3.Size = new System.Drawing.Size(262, 24);
             this.label3.TabIndex = 12;
-            this.label3.Text = "WiFi Low Band (2.4GHz)";
+            this.label3.Text = "WiFi 6 - 2.4GHz Secondary";
             // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
             this.panel5.Controls.Add(this.cellularLabel);
-            this.panel5.Location = new System.Drawing.Point(292, 298);
+            this.panel5.Location = new System.Drawing.Point(313, 80);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(258, 130);
             this.panel5.TabIndex = 15;
@@ -448,17 +509,17 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(113, 53);
+            this.label2.Location = new System.Drawing.Point(38, 53);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(227, 24);
+            this.label2.Size = new System.Drawing.Size(232, 24);
             this.label2.TabIndex = 8;
-            this.label2.Text = "WiFi High Band (5GHz)";
+            this.label2.Text = "WiFi 6 - 5.2GHz Primary";
             // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
             this.panel4.Controls.Add(this.lowBandLabel);
-            this.panel4.Location = new System.Drawing.Point(481, 80);
+            this.panel4.Location = new System.Drawing.Point(607, 80);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(258, 130);
             this.panel4.TabIndex = 13;
@@ -479,7 +540,7 @@
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
             this.panel3.Controls.Add(this.highBandLabel);
-            this.panel3.Location = new System.Drawing.Point(99, 80);
+            this.panel3.Location = new System.Drawing.Point(17, 80);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(258, 130);
             this.panel3.TabIndex = 11;
@@ -507,46 +568,46 @@
             // 
             // mainChart
             // 
-            chartArea3.AxisX.Title = "Time (s)";
-            chartArea3.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea3.AxisY.Title = "Traffic (MB)";
-            chartArea3.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea3.Name = "ChartArea1";
-            this.mainChart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.mainChart.Legends.Add(legend3);
+            chartArea1.AxisX.Title = "Time (s)";
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea1.AxisY.Title = "Traffic (MB)";
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea1.Name = "ChartArea1";
+            this.mainChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.mainChart.Legends.Add(legend1);
             this.mainChart.Location = new System.Drawing.Point(45, 41);
             this.mainChart.Name = "mainChart";
-            series9.BackImageWrapMode = System.Windows.Forms.DataVisualization.Charting.ChartImageWrapMode.TileFlipX;
-            series9.BorderColor = System.Drawing.Color.White;
-            series9.BorderWidth = 3;
-            series9.ChartArea = "ChartArea1";
-            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series9.Color = System.Drawing.Color.Blue;
-            series9.Legend = "Legend1";
-            series9.Name = "HighBand";
-            series10.BorderWidth = 3;
-            series10.ChartArea = "ChartArea1";
-            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series10.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            series10.Legend = "Legend1";
-            series10.Name = "LowBand";
-            series11.BorderWidth = 3;
-            series11.ChartArea = "ChartArea1";
-            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series11.Color = System.Drawing.Color.Red;
-            series11.Legend = "Legend1";
-            series11.Name = "Cellular";
-            series12.BorderWidth = 3;
-            series12.ChartArea = "ChartArea1";
-            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series12.Color = System.Drawing.Color.Black;
-            series12.Legend = "Legend1";
-            series12.Name = "Sum";
-            this.mainChart.Series.Add(series9);
-            this.mainChart.Series.Add(series10);
-            this.mainChart.Series.Add(series11);
-            this.mainChart.Series.Add(series12);
+            series1.BackImageWrapMode = System.Windows.Forms.DataVisualization.Charting.ChartImageWrapMode.TileFlipX;
+            series1.BorderColor = System.Drawing.Color.White;
+            series1.BorderWidth = 3;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Color = System.Drawing.Color.Blue;
+            series1.Legend = "Legend1";
+            series1.Name = "HighBand";
+            series2.BorderWidth = 3;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            series2.Legend = "Legend1";
+            series2.Name = "LowBand";
+            series3.BorderWidth = 3;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Color = System.Drawing.Color.Red;
+            series3.Legend = "Legend1";
+            series3.Name = "Cellular";
+            series4.BorderWidth = 3;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Color = System.Drawing.Color.Black;
+            series4.Legend = "Legend1";
+            series4.Name = "Sum";
+            this.mainChart.Series.Add(series1);
+            this.mainChart.Series.Add(series2);
+            this.mainChart.Series.Add(series3);
+            this.mainChart.Series.Add(series4);
             this.mainChart.Size = new System.Drawing.Size(774, 336);
             this.mainChart.TabIndex = 18;
             this.mainChart.Text = "chart1";
@@ -612,6 +673,38 @@
             this.BtnView1.Click += new System.EventHandler(this.BtnView1_Click);
             this.BtnView1.Leave += new System.EventHandler(this.BtnView1_Leave);
             // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
+            this.panel2.Controls.Add(this.aggregateLabel);
+            this.panel2.Location = new System.Drawing.Point(313, 297);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(258, 130);
+            this.panel2.TabIndex = 15;
+            // 
+            // aggregateLabel
+            // 
+            this.aggregateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.aggregateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aggregateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(146)))), ((int)(((byte)(249)))));
+            this.aggregateLabel.Location = new System.Drawing.Point(0, 0);
+            this.aggregateLabel.Name = "aggregateLabel";
+            this.aggregateLabel.Size = new System.Drawing.Size(258, 130);
+            this.aggregateLabel.TabIndex = 0;
+            this.aggregateLabel.Text = "---";
+            this.aggregateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.White;
+            this.label15.Location = new System.Drawing.Point(390, 270);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(107, 24);
+            this.label15.TabIndex = 14;
+            this.label15.Text = "Aggregate";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -621,9 +714,9 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.PnlNav);
+            this.Controls.Add(this.numbersPanel);
             this.Controls.Add(this.settingsPanel);
             this.Controls.Add(this.graphPanel);
-            this.Controls.Add(this.numbersPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -644,6 +737,7 @@
             this.graphPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -690,6 +784,13 @@
         private System.Windows.Forms.Button BtnSettings;
         private System.Windows.Forms.Button BtnView2;
         private System.Windows.Forms.Button BtnView1;
+        private System.Windows.Forms.TextBox profileName;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button profileButton;
+        private System.Windows.Forms.CheckBox releaseCheckBox;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label aggregateLabel;
     }
 }
 

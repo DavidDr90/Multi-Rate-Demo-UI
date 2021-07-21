@@ -21,7 +21,7 @@ namespace App
 
         public static string FormatSizeNew(float bytes)
         {
-            string suffixes = "MB";
+            string suffixes = "Mbits/s";
             decimal number = (decimal)bytes;
 
             return string.Format("{0:n1}{1}", number, suffixes);

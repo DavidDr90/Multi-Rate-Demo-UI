@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.IO;
 using Net;
+using System.Text.RegularExpressions;
 
 namespace App
 {
@@ -65,9 +66,13 @@ namespace App
         private Thread networkChartThread;
         private Form formPopup = null;
 
-        private List<Process> processList = new List<Process>();
-        bool connectFlag = false;
+        private List<Process> wifiIperfProcessList = new List<Process>();
+        private List<Process> generalProcessList = new List<Process>();
 
+        private bool connectFlag = false;
+        //Ira set true instead of false
+        private bool profileConnectionFlag = true;
+       
         #endregion
 
 
@@ -84,7 +89,7 @@ namespace App
 
             // retrive all network interfaces from OS
             PerformanceCounterCategory pcg = new PerformanceCounterCategory("Network Interface");
-            networkInstancesList = pcg.GetInstanceNames();
+            networkInstancesList = pcg.GetInstanceNames();                     
         }
 
 
@@ -106,40 +111,51 @@ namespace App
                 Console.WriteLine("ThreadAbortException was raised when trying to abort thread");
             }
 
-            // kill all open process
-            foreach (var process in processList)
+            // kill all WiFI Iperf open process
+            foreach (var process in wifiIperfProcessList)
             {
-                try
-                {
-                    Console.WriteLine("Killing process...");
-                    PrintProcessInfo(process);
-                    process.Kill();
-                }
-                catch (Win32Exception)
-                {
-                    Console.WriteLine("The associated process could not be terminated." +
-                        "-or- The process is terminating." +
-                        "-or- The associated process is a Win16 executable.\n");
-                    PrintProcessInfo(process);
+                SafelyKillProcess(process);
+            }
 
-                }
-                catch (NotSupportedException)
-                {
-                    Console.WriteLine(" You are attempting to call System.Diagnostics.Process.Kill for a process that is running on a remote computer." +
-                        " The method is available only for processes running on the local computer.");
-                    PrintProcessInfo(process);
-                }
-                catch (InvalidOperationException)
-                {
-                    Console.WriteLine("The process has already exited. " +
-                        "-or- There is no process associated with this System.Diagnostics.Process object.");
-                    PrintProcessInfo(process);
-                }
+            // kill all Cellular Iperf open process
+            foreach (var process in generalProcessList)
+            {
+                killingProcess(process);
             }
 
             Close();
         }
-        
+
+        private void killingProcess(Process process)
+        {
+            try
+            {
+                Console.WriteLine("Killing process...");
+                PrintProcessInfo(process);
+                process.Kill();
+            }
+            catch (Win32Exception)
+            {
+                Console.WriteLine("The associated process could not be terminated." +
+                    "-or- The process is terminating." +
+                    "-or- The associated process is a Win16 executable.\n");
+                PrintProcessInfo(process);
+
+            }
+            catch (NotSupportedException)
+            {
+                Console.WriteLine(" You are attempting to call System.Diagnostics.Process.Kill for a process that is running on a remote computer." +
+                    " The method is available only for processes running on the local computer.");
+                PrintProcessInfo(process);
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("The process has already exited. " +
+                    "-or- There is no process associated with this System.Diagnostics.Process object.");
+                PrintProcessInfo(process);
+            }
+        }
+
         #endregion
 
         #region View buttons     
@@ -199,13 +215,13 @@ namespace App
 
         #endregion
 
+
         #region Start Demo Buttons
 
         private void btnStartDemo_Click(object sender, EventArgs e)
         {
             //SW RF Kill            
             SetPhyRadioState(Wlan.Dot11RadioState.Off);            
-
             // start cellular Iper
             startCellularIperf();
             Thread.Sleep(TimeSpan.FromSeconds(3));
@@ -213,10 +229,13 @@ namespace App
             //SW RF Kill - On            
             SetPhyRadioState(Wlan.Dot11RadioState.On);
 
-            // start WiFi Iperf
-            startWiFi1Iperf();
-            startWiFi2Iperf();
+            // Connect to entered SSID profile
+            connectToProfile();
+            //Ira added more delay
+            Thread.Sleep(TimeSpan.FromSeconds(10));
 
+            startAllWifiIperf();
+                  
             // make sure we only have one thread running
             if (networkChartThread != null && networkChartThread.IsAlive)
             {
@@ -227,7 +246,7 @@ namespace App
             networkChartThread.Start();
 
             ShowFileTransferDialogBox();
-        }
+        }       
 
         /// <summary>
         /// connect or disconnect the wifi
@@ -238,6 +257,8 @@ namespace App
         {
             try
             {
+                stopAllWifiIperfProcess();
+              
                 Wlan.Dot11RadioState softwareRadioState = Wlan.Dot11RadioState.Off;
                 string buttonLabal = string.Empty;
 
@@ -251,8 +272,8 @@ namespace App
 
                 if (connectFlag)
                 {
-                    startWiFi1Iperf();
-                    startWiFi2Iperf();
+                    Thread.Sleep(TimeSpan.FromSeconds(5)); // delay to let the connection process finish
+                    startAllWifiIperf();
                 }
                 connectFlag = !connectFlag; // change the state for next click
 
@@ -263,13 +284,10 @@ namespace App
             }
         }
 
-        #endregion
-
         private void runIperButton_Click(object sender, EventArgs e)
         {
-            startWiFi1Iperf();
-            startWiFi2Iperf();
-            startCellularIperf();          
+            startAllWifiIperf();        
+            startCellularIperf();
         }
 
         #endregion
@@ -387,6 +405,10 @@ namespace App
                 else
                     ThreadHelperClass.SetText(this, cellularLabel, FileSizeFormatter.FormatSizeNew(newCellularValue));
 
+                if (newSumValue < 1)
+                    ThreadHelperClass.SetText(this, aggregateLabel, underOneString);
+                else
+                    ThreadHelperClass.SetText(this, aggregateLabel, FileSizeFormatter.FormatSizeNew(newSumValue));
 
                 // update graph data
                 highBandArray[highBandArray.Length - 1] = Math.Round(newHighBandValue, 0);
@@ -462,17 +484,13 @@ namespace App
         #endregion
 
 
-        #region IPerf Running
-
-        int sevenBase = 7000;
-        int eightBase = 8000;
+        #region IPerf Running        
 
         private void startWiFi1Iperf()
         {
             if (!string.IsNullOrEmpty(iperfCmdWiFi1.Text))
             {
-                sevenBase++;
-                startIPerfProcess(replacePortNumber(iperfCmdWiFi1.Text, sevenBase));
+                startIPerfProcess(iperfCmdWiFi1.Text);
             }
         }
         
@@ -480,8 +498,7 @@ namespace App
         {
             if (!string.IsNullOrEmpty(iperfCmdWiFi2.Text))
             {
-                eightBase++;
-                startIPerfProcess(replacePortNumber(iperfCmdWiFi2.Text, eightBase));
+                startIPerfProcess(iperfCmdWiFi2.Text);        
             }
         }
 
@@ -492,44 +509,65 @@ namespace App
         }
 
         /// <summary>
+        /// Start all WiFi Iperf with small delay between team
+        /// </summary>
+        private void startAllWifiIperf()
+        {
+            startWiFi1Iperf();
+            Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            startWiFi2Iperf();
+        }
+
+        /// <summary>
         /// start process using input text line
         /// </summary>
         /// <param name="text"></param>
-        private void startIPerfProcess(string text)
+        private Process startIPerfProcess(string text, bool isCellularIperf = false)
         {
+            
             // split file name and args part
             var firstSpaceIndex = text.IndexOf(' ');
             var pathToExe = text.Substring(0, firstSpaceIndex);
             var arguments = text.Substring(firstSpaceIndex);
-            string directoryName = Path.GetDirectoryName(pathToExe);
-            Process process = new Process
-            {
-                StartInfo =
+            string directoryName = Path.GetDirectoryName(pathToExe);           
+            try
+            {   Process process = new Process
                 {
-                    FileName = pathToExe,
-                    Arguments = arguments,
-                    UseShellExecute = true,
-                    CreateNoWindow = false,
-                    RedirectStandardOutput = false,
-                    WorkingDirectory = directoryName,
-                    WindowStyle = ProcessWindowStyle.Minimized
-                },
-                EnableRaisingEvents = true,
-            };
-           
-            Console.WriteLine($"Starting to run process = [{pathToExe}]");
-            process.Start();
-            processList.Add(process);  // add the process for future use
+                    StartInfo =
+                    {
+                        FileName = pathToExe,
+                        Arguments = arguments,
+                        UseShellExecute = true,
+                        CreateNoWindow = false,
+                        RedirectStandardOutput = false,
+                        WorkingDirectory = directoryName,
+                        WindowStyle = ProcessWindowStyle.Minimized
+                    },
+                    EnableRaisingEvents = true,
+                };
 
-            // change the window name only for active process
-            Thread.Sleep(100);
-            if (!process.HasExited)
+                Console.WriteLine($"Starting to run process = [{pathToExe}]");
+                process.Start();
+                if (isCellularIperf)
+                    generalProcessList.Add(process);
+                else
+                    wifiIperfProcessList.Add(process);  // add the process for future use
+
+                // change the window name only for active process
+                Thread.Sleep(100);
+                if (!process.HasExited)
+                {
+                    IntPtr handle = process.MainWindowHandle;
+                    SetWindowText(handle, $"{pathToExe}: {arguments}");                   
+                }
+            }catch(Exception e)
             {
-                IntPtr handle = process.MainWindowHandle;
-                SetWindowText(handle, $"{pathToExe}: {arguments}");
+                MessageBox.Show($"We ran into an error while trying to run Iperf using cmd: {pathToExe}: {arguments}\n" +
+                    $"Error Message: {e.Message}", "Error While trying to start Iperf", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
+            return null;
+        }   
+       
         #endregion
 
 
@@ -544,7 +582,7 @@ namespace App
                     dot11SoftwareRadioState = softwareRadioState
                 };
                 SetInterface(Wlan.WlanIntfOpcode.RadioState, phyRadioState);
-                Thread.Sleep(TimeSpan.FromSeconds(5));
+                Thread.Sleep(TimeSpan.FromSeconds(2));
 
             }
             catch (Exception e)
@@ -602,6 +640,7 @@ namespace App
 
 
         #region General Functions
+        
 
         private void PrintProcessInfo(Process process)
         {
@@ -662,7 +701,166 @@ namespace App
             return cmdWithNewPort;
         }
 
+        /// <summary>
+        /// using regex to replace port number
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="portNumber"></param>
+        /// <returns></returns>        
+        private string replacePortNumber1(string text, int portNumber)
+        {
+            return Regex.Replace(text, @"-p \d+", $"-p {portNumber}");
+        }
+
         #endregion
+
+        #endregion
+
+        private void profileButton_Click(object sender, EventArgs e)
+        {
+            connectToProfile();
+        }
+
+        /// <summary>
+        /// connect to input SSID profile name using netsh command
+        /// change the connect/disconnect button
+        /// </summary>
+        private void connectToProfile()
+        {
+            stopAllWifiIperfProcess();
+            
+            // if profile name is empty don't do anything
+            if (string.IsNullOrEmpty(profileName.Text))
+                return;
+
+            string cmd = string.Empty;
+            // if we want to run release/renew flow
+            if (releaseCheckBox.Checked)
+            {
+                profileButton.Text = $"{((profileConnectionFlag) ? "Release" : "Renew")}";
+                //Ira for release renew
+                cmd = $"ipconfig /{((profileConnectionFlag) ? @"renew ""Wi-Fi"" & ipconfig /renew ""Wi-Fi 2""" : $"release *Fi*")}";
+            }
+            else//for connect disconnect flow
+            {
+                profileButton.Text = $"{((profileConnectionFlag) ? "Disconnect" : "Connect")} Profile";
+                //Ira - You were right David, the command I sent is incorrect, sorry )))
+                cmd = $"netsh wlan {((profileConnectionFlag) ? $"connect name ={profileName.Text} ssid={profileName.Text}" : "disconnect")}";
+            }                                     
+
+            CreateAndRunProcess("cmd.exe", $"/k {cmd}");
+
+            //Ira - Need to start Ipef Again, but the command below doesn't help            
+            if (profileConnectionFlag)
+            {
+                startAllWifiIperf();
+            }
+
+            profileConnectionFlag = !profileConnectionFlag;            
+        }
+      
+        private void CreateAndRunProcess(string pathToExe, string arguments)
+        {
+            string directoryName = Path.GetDirectoryName(pathToExe);
+            Process process = new Process
+            {
+                StartInfo =
+                {
+                    FileName = pathToExe,
+                    Arguments = arguments,
+                    UseShellExecute = true,
+                    CreateNoWindow = false,
+                    WorkingDirectory = directoryName
+                },
+                EnableRaisingEvents = true,
+            };        
+
+            Console.WriteLine($"Starting to run process = [{pathToExe}]");
+            process.Start();
+            generalProcessList.Add(process);  // add the process for future use
+
+            // change the window name only for active process
+            Thread.Sleep(TimeSpan.FromMilliseconds(10));
+            if (!process.HasExited)
+            {
+                IntPtr handle = process.MainWindowHandle;
+                SetWindowText(handle, $"{pathToExe}: {arguments}");
+            }
+        }   
+
+        /// <summary>
+        /// change the lable on the button based on the checkbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void releaseCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (releaseCheckBox.Checked)
+            {
+                profileButton.Text = $"{((profileConnectionFlag) ? "Release" : "Renew")}";
+            }
+            else//for connect disconnect flow
+            {
+                profileButton.Text = $"{((profileConnectionFlag) ? "Disconnect" : "Connect")} Profile";
+            }
+        }
+
+
+        #region Safely Kill Iperf Process
+
+        internal const int CTRL_C_EVENT = 0;
+        [DllImport("kernel32.dll")]
+        internal static extern bool GenerateConsoleCtrlEvent(uint dwCtrlEvent, uint dwProcessGroupId);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern bool AttachConsole(uint dwProcessId);
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        internal static extern bool FreeConsole();
+        [DllImport("kernel32.dll")]
+        static extern bool SetConsoleCtrlHandler(ConsoleCtrlDelegate HandlerRoutine, bool Add);
+        // Delegate type to be used as the Handler Routine for SCCH
+        delegate Boolean ConsoleCtrlDelegate(uint CtrlType);
+
+
+        /// <summary>
+        /// sending ctrl+c to input process
+        /// based on this answer: https://stackoverflow.com/questions/283128/how-do-i-send-ctrlc-to-a-process-in-c
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        private bool SafelyKillProcess(Process p)
+        {
+            if (AttachConsole((uint)p.Id))
+            {
+                SetConsoleCtrlHandler(null, true);
+                try
+                {
+                    if (!GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0))
+                        return false;
+                    p.WaitForExit();
+                }
+                finally
+                {
+                    SetConsoleCtrlHandler(null, false);
+                    FreeConsole();
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private void stopAllWifiIperfProcess()
+        {
+            //stop all WiFi process using ctrl+c
+            foreach (var process in wifiIperfProcessList)
+            {
+                SafelyKillProcess(process);
+            }
+            // wait for stabiliszation
+            Thread.Sleep(TimeSpan.FromSeconds(0.5));
+        }
+        #endregion
+
+
     }
 }
 
