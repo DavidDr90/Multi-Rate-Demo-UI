@@ -505,7 +505,7 @@ namespace App
         private void startCellularIperf()
         {
             if (!string.IsNullOrEmpty(iperfCmdCellular.Text))
-                startIPerfProcess(iperfCmdCellular.Text);
+                startIPerfProcess(iperfCmdCellular.Text, true);
         }
 
         /// <summary>
@@ -513,6 +513,7 @@ namespace App
         /// </summary>
         private void startAllWifiIperf()
         {
+            Thread.Sleep(TimeSpan.FromMilliseconds(500));
             startWiFi1Iperf();
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
             startWiFi2Iperf();
@@ -524,25 +525,38 @@ namespace App
         /// <param name="text"></param>
         private Process startIPerfProcess(string text, bool isCellularIperf = false)
         {
-            
-            // split file name and args part
-            var firstSpaceIndex = text.IndexOf(' ');
-            var pathToExe = text.Substring(0, firstSpaceIndex);
-            var arguments = text.Substring(firstSpaceIndex);
-            string directoryName = Path.GetDirectoryName(pathToExe);           
+            var firstSpaceIndex = -1;
+            var pathToExe = string.Empty;
+            var arguments = string.Empty;
+            string directoryName = string.Empty;
             try
-            {   Process process = new Process
+            {
+                // split file name and args part
+                firstSpaceIndex = text.IndexOf(' ');
+                pathToExe = text.Substring(0, firstSpaceIndex);
+                arguments = text.Substring(firstSpaceIndex);
+                directoryName = Path.GetDirectoryName(pathToExe);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"We ran into an error while parsing IPerf args, input command: {text}\n" +
+                        $"Error Message: {e.Message}", "Error While Parsing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            try
+            {
+                Process process = new Process
                 {
                     StartInfo =
-                    {
-                        FileName = pathToExe,
-                        Arguments = arguments,
-                        UseShellExecute = true,
-                        CreateNoWindow = false,
-                        RedirectStandardOutput = false,
-                        WorkingDirectory = directoryName,
-                        WindowStyle = ProcessWindowStyle.Minimized
-                    },
+                {
+                    FileName = pathToExe,
+                    Arguments = arguments,
+                    UseShellExecute = true,
+                    CreateNoWindow = false,
+                    RedirectStandardOutput = false,
+                    WorkingDirectory = directoryName,
+                    WindowStyle = ProcessWindowStyle.Minimized
+                },
                     EnableRaisingEvents = true,
                 };
 
@@ -558,13 +572,15 @@ namespace App
                 if (!process.HasExited)
                 {
                     IntPtr handle = process.MainWindowHandle;
-                    SetWindowText(handle, $"{pathToExe}: {arguments}");                   
+                    SetWindowText(handle, $"{pathToExe}: {arguments}");
                 }
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 MessageBox.Show($"We ran into an error while trying to run Iperf using cmd: {pathToExe}: {arguments}\n" +
                     $"Error Message: {e.Message}", "Error While trying to start Iperf", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+                        
             return null;
         }   
        
@@ -770,7 +786,8 @@ namespace App
                     Arguments = arguments,
                     UseShellExecute = true,
                     CreateNoWindow = false,
-                    WorkingDirectory = directoryName
+                    WorkingDirectory = directoryName,
+                    WindowStyle = ProcessWindowStyle.Minimized
                 },
                 EnableRaisingEvents = true,
             };        
@@ -854,9 +871,10 @@ namespace App
             foreach (var process in wifiIperfProcessList)
             {
                 SafelyKillProcess(process);
+                // wait for stabiliszation
+                Thread.Sleep(TimeSpan.FromSeconds(0.5));
             }
-            // wait for stabiliszation
-            Thread.Sleep(TimeSpan.FromSeconds(0.5));
+           
         }
         #endregion
 
