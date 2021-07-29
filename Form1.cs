@@ -10,6 +10,7 @@ using System.Threading;
 using System.IO;
 using Net;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace App
 {
@@ -288,6 +289,13 @@ namespace App
         private void startMonitorButton_Click(object sender, EventArgs e)
         {
             StartMonitoringTraffic();
+        }
+
+        #endregion
+
+        private void profileButton_Click(object sender, EventArgs e)
+        {
+            connectToProfile();
         }
 
         #endregion
@@ -608,15 +616,42 @@ namespace App
 
         #region set SW RF Kill Fucntions       
 
-        public static void SetPhyRadioState(Wlan.Dot11RadioState softwareRadioState)
+        public void SetPhyRadioState(Wlan.Dot11RadioState softwareRadioState)
         {
             try {
-                var phyRadioState = new Wlan.WlanPhyRadioState
+
+                var resourceName = "App.Resources.SwRfKill.exe";
+                string tempFolder = @"C:\MRATTemp";
+                string filePath = Path.Combine(tempFolder, "SwRfKill.exe");
+                Directory.CreateDirectory(tempFolder);
+                // read the exe data from the project
+                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
                 {
-                    dwPhyIndex = 0,
-                    dot11SoftwareRadioState = softwareRadioState
-                };
-                SetInterface(Wlan.WlanIntfOpcode.RadioState, phyRadioState);
+                    byte[] byteData = StreamToBytes(stream);
+                    File.WriteAllBytes(filePath, byteData); // save it to a new file in defaul location                   
+                }
+
+                string args = string.Empty;
+                switch (softwareRadioState)
+                {
+                    case Wlan.Dot11RadioState.On:
+                        args = "on";
+                        break;
+                    case Wlan.Dot11RadioState.Off:
+                        args = "off";
+                        break;
+                }
+
+                // run the cpp code
+                CreateAndRunProcess(filePath, args);
+
+                // old C# implementation
+                //var phyRadioState = new Wlan.WlanPhyRadioState
+                //{
+                //    dwPhyIndex = 0,
+                //    dot11SoftwareRadioState = softwareRadioState
+                //};
+                //SetInterface(Wlan.WlanIntfOpcode.RadioState, phyRadioState);
                 // David - try to improve connect/disconnect time
                 //Thread.Sleep(TimeSpan.FromSeconds(2));
 
@@ -624,6 +659,8 @@ namespace App
             catch (Exception e)
             {
                 Console.WriteLine($"Error while trying to change SW RF state!\nMessage: [{e.Message}]");
+                MessageBox.Show($"Error while trying to change SW RF state!\n" +
+                        $"Error Message: {e.Message}", "Error While Parsing", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -653,6 +690,29 @@ namespace App
             }
         }
 
+        /// <summary>
+        /// StreamToBytes - Converts a Stream to a byte array. Eg: Get a Stream from a file,url, or open file handle.
+        /// </summary>
+        /// <param name="input">input is the stream we are to return as a byte array</param>
+        /// <returns>byte[] The Array of bytes that represents the contents of the stream</returns>
+        static byte[] StreamToBytes(Stream input)
+        {
+
+            int capacity = input.CanSeek ? (int)input.Length : 0; //Bitwise operator - If can seek, Capacity becomes Length, else becomes 0.
+            using (MemoryStream output = new MemoryStream(capacity)) //Using the MemoryStream output, with the given capacity.
+            {
+                int readLength;
+                byte[] buffer = new byte[capacity/*4096*/];  //An array of bytes
+                do
+                {
+                    readLength = input.Read(buffer, 0, buffer.Length);   //Read the memory data, into the buffer
+                    output.Write(buffer, 0, readLength); //Write the buffer to the output MemoryStream incrementally.
+                }
+                while (readLength != 0); //Do all this while the readLength is not 0
+                return output.ToArray();  //When finished, return the finished MemoryStream object as an array.
+            }
+
+        }
         #endregion
 
 
@@ -749,13 +809,7 @@ namespace App
         }
 
         #endregion
-
-        #endregion
-
-        private void profileButton_Click(object sender, EventArgs e)
-        {
-            connectToProfile();
-        }
+         
 
         /// <summary>
         /// connect to input SSID profile name using netsh command
@@ -899,9 +953,8 @@ namespace App
             Thread.Sleep(TimeSpan.FromMilliseconds(100));
         }
 
-        #endregion
 
-        
+        #endregion
     }
 }
 

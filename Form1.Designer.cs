@@ -57,11 +57,11 @@
             this.runIperButton = new System.Windows.Forms.Button();
             this.settingsPanel = new System.Windows.Forms.Panel();
             this.releaseCheckBox = new System.Windows.Forms.CheckBox();
+            this.startMonitorButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.profileName = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.numbersPanel = new System.Windows.Forms.Panel();
-            this.profileButton = new System.Windows.Forms.Button();
             this.wifiButtom = new System.Windows.Forms.Button();
             this.btnStartDemo = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
@@ -76,13 +76,13 @@
             this.lowBandLabel = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.highBandLabel = new System.Windows.Forms.Label();
+            this.profileButton = new System.Windows.Forms.Button();
             this.graphPanel = new System.Windows.Forms.Panel();
             this.mainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel1 = new System.Windows.Forms.Panel();
             this.BtnSettings = new System.Windows.Forms.Button();
             this.BtnView2 = new System.Windows.Forms.Button();
             this.BtnView1 = new System.Windows.Forms.Button();
-            this.startMonitorButton = new System.Windows.Forms.Button();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileTransferPicture)).BeginInit();
@@ -364,6 +364,21 @@
             this.releaseCheckBox.UseVisualStyleBackColor = true;
             this.releaseCheckBox.CheckedChanged += new System.EventHandler(this.releaseCheckBox_CheckedChanged);
             // 
+            // startMonitorButton
+            // 
+            this.startMonitorButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(50)))));
+            this.startMonitorButton.FlatAppearance.BorderSize = 0;
+            this.startMonitorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.startMonitorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startMonitorButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.startMonitorButton.Location = new System.Drawing.Point(373, 401);
+            this.startMonitorButton.Name = "startMonitorButton";
+            this.startMonitorButton.Size = new System.Drawing.Size(186, 45);
+            this.startMonitorButton.TabIndex = 37;
+            this.startMonitorButton.Text = "Start Monitoring";
+            this.startMonitorButton.UseVisualStyleBackColor = false;
+            this.startMonitorButton.Click += new System.EventHandler(this.startMonitorButton_Click);
+            // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(50)))));
@@ -400,7 +415,6 @@
             // 
             // numbersPanel
             // 
-            this.numbersPanel.Controls.Add(this.profileButton);
             this.numbersPanel.Controls.Add(this.wifiButtom);
             this.numbersPanel.Controls.Add(this.btnStartDemo);
             this.numbersPanel.Controls.Add(this.label15);
@@ -417,21 +431,6 @@
             this.numbersPanel.TabIndex = 19;
             this.numbersPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.numbersPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
-            // 
-            // profileButton
-            // 
-            this.profileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(50)))));
-            this.profileButton.FlatAppearance.BorderSize = 0;
-            this.profileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.profileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.profileButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.profileButton.Location = new System.Drawing.Point(626, 392);
-            this.profileButton.Name = "profileButton";
-            this.profileButton.Size = new System.Drawing.Size(196, 45);
-            this.profileButton.TabIndex = 16;
-            this.profileButton.Text = "Disconnect Profile";
-            this.profileButton.UseVisualStyleBackColor = false;
-            this.profileButton.Click += new System.EventHandler(this.profileButton_Click);
             // 
             // wifiButtom
             // 
@@ -591,6 +590,21 @@
             this.highBandLabel.Text = "---";
             this.highBandLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // profileButton
+            // 
+            this.profileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(50)))));
+            this.profileButton.FlatAppearance.BorderSize = 0;
+            this.profileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.profileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profileButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.profileButton.Location = new System.Drawing.Point(626, 392);
+            this.profileButton.Name = "profileButton";
+            this.profileButton.Size = new System.Drawing.Size(196, 45);
+            this.profileButton.TabIndex = 16;
+            this.profileButton.Text = "Disconnect Profile";
+            this.profileButton.UseVisualStyleBackColor = false;
+            this.profileButton.Click += new System.EventHandler(this.profileButton_Click);
+            // 
             // graphPanel
             // 
             this.graphPanel.Controls.Add(this.mainChart);
@@ -706,21 +720,6 @@
             this.BtnView1.UseVisualStyleBackColor = true;
             this.BtnView1.Click += new System.EventHandler(this.BtnView1_Click);
             this.BtnView1.Leave += new System.EventHandler(this.BtnView1_Leave);
-            // 
-            // startMonitorButton
-            // 
-            this.startMonitorButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(50)))));
-            this.startMonitorButton.FlatAppearance.BorderSize = 0;
-            this.startMonitorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.startMonitorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startMonitorButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.startMonitorButton.Location = new System.Drawing.Point(373, 401);
-            this.startMonitorButton.Name = "startMonitorButton";
-            this.startMonitorButton.Size = new System.Drawing.Size(186, 45);
-            this.startMonitorButton.TabIndex = 37;
-            this.startMonitorButton.Text = "Start Monitoring";
-            this.startMonitorButton.UseVisualStyleBackColor = false;
-            this.startMonitorButton.Click += new System.EventHandler(this.startMonitorButton_Click);
             // 
             // Form1
             // 

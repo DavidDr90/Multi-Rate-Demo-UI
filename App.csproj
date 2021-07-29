@@ -91,5 +91,10 @@
   <ItemGroup>
     <None Include="Resources\ezgif.com-gif-maker.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SwRfKill.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,4 +7,4 @@ C:\Users\JERLocal\Desktop\C#_Projects\NetworkStatistics\App\obj\Release\App.cspr
 C:\Users\JERLocal\Desktop\C#_Projects\NetworkStatistics\App\obj\Release\App.csproj.CoreCompileInputs.cache
 C:\Users\JERLocal\Desktop\C#_Projects\NetworkStatistics\App\obj\Release\App.exe
 C:\Users\JERLocal\Desktop\C#_Projects\NetworkStatistics\App\obj\Release\App.pdb
-C:\Users\JERLocal\Desktop\C#_Projects\NetworkStatistics\App\obj\Release\App.csprojAssemblyReference.cache
+C:\Users\JERLocal\Desktop\C#_Projects\NetworkStatistics\App\bin\Release\Resources\SwRfKill.exe
